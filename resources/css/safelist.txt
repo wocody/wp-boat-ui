@@ -1,0 +1,25 @@
+Utilities always available in the prebuilt dist/boat-ui.css (Tailwind scans this file as a source).
+Plugins needing more utilities can build their own stylesheet, see README.
+
+bui:flex bui:inline-flex bui:grid bui:block bui:inline-block bui:hidden bui:contents
+bui:flex-col bui:flex-row bui:flex-wrap bui:flex-1 bui:grow bui:shrink-0 bui:flex-none
+bui:items-start bui:items-center bui:items-end bui:items-baseline bui:justify-start bui:justify-center bui:justify-between bui:justify-end bui:self-start bui:self-center
+bui:gap-0 bui:gap-1 bui:gap-1.5 bui:gap-2 bui:gap-3 bui:gap-4 bui:gap-5 bui:gap-6 bui:gap-8 bui:gap-x-6 bui:gap-y-2
+bui:grid-cols-1 bui:grid-cols-2 bui:grid-cols-3 bui:grid-cols-4 bui:col-span-1 bui:col-span-2 bui:col-span-3
+bui:sm:grid-cols-2 bui:md:grid-cols-2 bui:md:grid-cols-3 bui:lg:grid-cols-2 bui:lg:grid-cols-3 bui:lg:grid-cols-4 bui:xl:grid-cols-3 bui:2xl:grid-cols-3 bui:2xl:col-span-2
+bui:space-y-1 bui:space-y-2 bui:space-y-3 bui:space-y-4 bui:space-y-6 bui:space-y-8 bui:space-x-2 bui:space-x-3
+bui:m-0 bui:mx-auto bui:mt-0 bui:mt-1 bui:mt-2 bui:mt-3 bui:mt-4 bui:mt-6 bui:mt-8 bui:mb-0 bui:mb-1 bui:mb-2 bui:mb-3 bui:mb-4 bui:mb-6 bui:mb-8 bui:ms-1 bui:ms-2 bui:ms-auto bui:me-1 bui:me-2 bui:me-3
+bui:p-0 bui:p-2 bui:p-3 bui:p-4 bui:p-6 bui:p-8 bui:px-2 bui:px-3 bui:px-4 bui:px-6 bui:py-1 bui:py-2 bui:py-3 bui:py-4 bui:pt-4 bui:pb-4
+bui:w-full bui:w-auto bui:w-4 bui:w-5 bui:w-6 bui:w-8 bui:w-10 bui:w-12 bui:w-16 bui:h-4 bui:h-5 bui:h-6 bui:h-8 bui:h-10 bui:h-12 bui:h-16 bui:min-w-0
+bui:max-w-xs bui:max-w-sm bui:max-w-md bui:max-w-lg bui:max-w-xl bui:max-w-2xl bui:max-w-3xl bui:max-w-4xl bui:max-w-5xl bui:max-w-screen-sm bui:max-w-prose bui:max-w-none
+bui:text-xxs bui:text-xs bui:text-tiny bui:text-sm bui:text-base bui:text-lg bui:text-xl bui:text-2xl bui:text-3xl
+bui:font-normal bui:font-medium bui:font-semibold bui:font-bold bui:italic bui:uppercase bui:tracking-wide bui:leading-5 bui:leading-6 bui:leading-7 bui:leading-tight bui:tabular-nums
+bui:text-start bui:text-center bui:text-end bui:truncate bui:break-words bui:break-all bui:whitespace-nowrap bui:underline bui:no-underline
+bui:text-white bui:text-slate-400 bui:text-slate-500 bui:text-slate-600 bui:text-slate-700 bui:text-slate-800 bui:text-slate-900
+bui:text-primary-500 bui:text-primary-600 bui:text-green-500 bui:text-green-600 bui:text-red-500 bui:text-red-600 bui:text-amber-500 bui:text-amber-600 bui:text-blue-500 bui:text-blue-600
+bui:bg-white bui:bg-slate-50 bui:bg-slate-100 bui:bg-slate-200 bui:bg-primary-50 bui:bg-primary-500 bui:bg-green-100 bui:bg-red-100 bui:bg-amber-100 bui:bg-blue-100 bui:bg-transparent
+bui:border bui:border-0 bui:border-t bui:border-b bui:border-slate-100 bui:border-slate-200 bui:border-slate-300 bui:border-primary-300 bui:border-dashed bui:divide-y bui:divide-slate-200
+bui:rounded bui:rounded-md bui:rounded-lg bui:rounded-xl bui:rounded-full bui:shadow-xs bui:shadow-sm bui:shadow-md bui:shadow-none
+bui:relative bui:absolute bui:sticky bui:top-0 bui:bottom-0 bui:z-10 bui:overflow-hidden bui:overflow-auto bui:overflow-x-auto
+bui:sr-only bui:not-sr-only bui:opacity-50 bui:pointer-events-none bui:cursor-pointer bui:list-disc bui:list-inside
+bui:min-[783px]:block bui:min-[783px]:hidden bui:min-[783px]:grid-cols-2 bui:sm:flex-row bui:md:flex-row bui:lg:flex-row bui:sm:max-w-sm

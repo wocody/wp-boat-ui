@@ -1,0 +1,12 @@
+# Keep Composer dist archives small: plugins only need runtime files.
+/node_modules export-ignore
+/tests export-ignore
+/tools export-ignore
+/preview export-ignore
+/.github export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/phpcs.xml.dist export-ignore
+/docs export-ignore

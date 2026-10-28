@@ -1,0 +1,18 @@
+{
+  "name": "@wocody/wp-boat-ui",
+  "private": true,
+  "description": "Build tooling for the Wocody WordPress admin UI kit.",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "tailwindcss -i resources/css/boat-ui.css -o dist/boat-ui.css --minify",
+    "build:js": "node tools/build-js.mjs",
+    "watch": "tailwindcss -i resources/css/boat-ui.css -o dist/boat-ui.css --watch",
+    "icons": "node tools/build-icons.mjs"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "heroicons": "1.0.6",
+    "tailwindcss": "4.3.3"
+  }
+}
