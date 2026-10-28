@@ -1,6 +1,8 @@
 # Wocody Boat UI
 
-Shared WordPress admin interface for every Wocody plugin (Boat Backup, SEO, Cache, …). It gives each plugin the same screen layout — brand, sidebar navigation with quick search, white settings cards, right-hand column — and the same form controls, built with **Tailwind CSS v4** and rendered by PHP.
+Shared WordPress admin interface for every Wocody plugin (Boat Backup, SEO, Cache, …). It gives each plugin the same screen layout — app bar with the brand mark and quick search, sidebar navigation, settings cards, right-hand column — and the same form controls, built with **Tailwind CSS v4** and rendered by PHP.
+
+Visual identity: Wocody orange `#FC7900` on warm neutrals (`ink`), the system font stack at 14px, 10px control and 16px card radii, and [Phosphor Icons](https://phosphoricons.com) (regular weight).
 
 - Server-rendered PHP components, escaped by default. No React, no build step in the plugins.
 - One prebuilt stylesheet (`dist/boat-ui.css`) and one dependency-free script (`dist/boat-ui.js`).
@@ -42,22 +44,24 @@ add_action( 'admin_enqueue_scripts', function ( $hook ) {
 
 function boat_seo_render() {
 	Page::render( array(
-		'brand'      => array( 'name' => 'boat', 'product' => 'SEO', 'href' => '#general' ),
+		'brand'      => array( 'name' => 'Boat', 'product' => 'SEO', 'icon' => 'magnifying-glass', 'href' => '#general' ),
+		'actions'    => UI::badge( 'v1.0.0', 'plain', array( 'dot' => true ) ), // End of the app bar.
 		'router'     => true, // One [data-bui-view] visible at a time, chosen by the URL hash.
 		'navigation' => array(
-			array( 'label' => 'General', 'icon' => 'desktop-computer', 'items' => array(
-				array( 'label' => 'Site features', 'view' => 'general', 'active' => true ),
-				array( 'label' => 'Site basics', 'view' => 'basics' ),
+			array( 'label' => 'General', 'items' => array( // Group heading + links.
+				array( 'label' => 'Site features', 'icon' => 'squares-four', 'view' => 'general', 'active' => true ),
+				array( 'label' => 'Site basics', 'icon' => 'sliders-horizontal', 'view' => 'basics' ),
 			) ),
-			array( 'label' => 'Tools', 'icon' => 'cog', 'href' => admin_url( 'admin.php?page=boat-seo-tools' ) ),
+			array( 'label' => 'Tools', 'icon' => 'wrench', 'href' => admin_url( 'admin.php?page=boat-seo-tools' ) ),
 		),
 		'content'    => array(
 			'<form method="post" action="options.php" data-bui-view="general">'
 				. UI::paper( array(
 					'as'           => 'main',
 					'title'        => 'Site features',
+					'icon'         => 'squares-four',
 					'description'  => 'Tell us which features you want to use.',
-					'dirty_footer' => true, // The save bar appears after a change, like the reference UI.
+					'dirty_footer' => true, // The save bar appears only after a change.
 					'content'      => UI::section( array(
 						'title'   => 'Site info',
 						'content' => array(
@@ -69,7 +73,7 @@ function boat_seo_render() {
 				) )
 			. '</form>',
 		),
-		'aside'      => UI::aside_box( array( 'title' => 'Need help?', 'content' => '<p>Read the docs.</p>' ) ),
+		'aside'      => UI::aside_box( array( 'title' => 'Need help?', 'icon' => 'lifebuoy', 'content' => '<p>Read the docs.</p>' ) ),
 	) );
 }
 ```
@@ -82,15 +86,15 @@ All methods are static on `Wocody\BoatUI\UI` and return a string. Every componen
 
 | Area | Methods |
 | --- | --- |
-| Layout | `Page::render()` / `Page::html()`, `paper()`, `section()`, `divider()`, `card()`, `aside_box()`, `check_list()` |
-| Text | `title()`, `link()`, `code()`, `badge()`, `icon()` |
+| Layout | `Page::render()` / `Page::html()`, `paper()` (with header `icon`), `section()`, `divider()`, `card()`, `aside_box()` (default or dark `highlight`), `check_list()` |
+| Text | `title()`, `link()`, `code()`, `badge()` (plain, primary, info, success, warning, error, upsell; `dot`), `icon()` |
 | Actions | `button()` (primary, secondary, tertiary, error, upsell; small … extra-large; `href`, `icon`, `loading`), `button_group()`, `spinner()` |
 | Forms | `text_field()`, `textarea_field()`, `select_field()`, `checkbox()`, `checkbox_group()`, `radio_group()` (incl. `inline-block` tiles), `toggle()`, `toggle_field()`, `file_input()`, `disclosure()` |
 | Feedback | `alert()`, `banner()`, `progress()`, `progress_field()`, `tooltip()`, `skeleton()` |
 | Data | `table()` (stacks on phones, keeps header associations), `feature_group()`, `feature_list()` |
 | Overlays | `modal()` (native `<dialog>`), toasts via JavaScript |
 
-Toggles are native checkboxes with `role="switch"`, so they post like any other field. Validation is passed as `'validation' => array( 'variant' => 'error', 'message' => '…' )`. Icons are [Heroicons v1](https://v1.heroicons.com): `outline` names (`cog`) or `solid:` names (`solid:check`).
+Toggles are native checkboxes with `role="switch"`, so they post like any other field. Validation is passed as `'validation' => array( 'variant' => 'error', 'message' => '…' )`. Icons are [Phosphor Icons](https://phosphoricons.com) in the regular weight; pass the name shown on the site (`gear-six`, `cloud-arrow-up`, …). `Icon::names()` lists all 1,512.
 
 ### JavaScript API
 
@@ -107,25 +111,27 @@ Declarative hooks: `data-bui-modal-open="id"`, `data-bui-modal-close`, `data-bui
 
 ## Theming
 
-The primary scale defaults to the reference magenta (`#a61e69`). Each plugin can re-theme its screen:
+The brand scale is orange, built around `primary-500: #FC7900`. White text on that orange fails WCAG contrast (2.7:1), so filled orange surfaces use dark text (`primary-contrast: #12110F`, 7.1:1) and orange text on white uses `primary-700` (`#A84E00`, 5.6:1). Neutrals are the warm `ink` scale (`ink-50` page background … `ink-950` text). Status colours come from Tailwind (red, amber, green, blue).
+
+Each plugin can re-theme its screen:
 
 ```php
 UI::enqueue( array( 'theme' => array(
-	'primary-500' => '#0a7cbd',
-	'primary-600' => '#086aa1',
-	'primary-700' => '#075a88',
-	'primary-300' => '#7cc0e6',
+	'primary-500'      => '#0a7cbd',
+	'primary-600'      => '#086aa1',
+	'primary-700'      => '#075a88',
+	'primary-contrast' => '#ffffff',
 ) ) );
 ```
 
-Tokens are CSS custom properties named `--bui-color-{palette}-{shade}` (slate, gray, red, amber, yellow, green, blue, indigo and primary use the Tailwind v3 hex values of the reference interface).
+Tokens are CSS custom properties named `--bui-color-{palette}-{shade}`; radii are `--bui-radius-control` and `--bui-radius-card`.
 
 ## Tailwind utilities
 
 Utilities use the Tailwind v4 prefix syntax and are `!important` so they win over wp-admin styles:
 
 ```html
-<div class="bui:flex bui:items-center bui:gap-4 bui:md:grid-cols-2">…</div>
+<div class="bui:flex bui:items-center bui:gap-4 bui:text-ink-600 bui:md:grid-cols-2">…</div>
 ```
 
 The prebuilt CSS contains the utilities used by the components plus the common set in `resources/css/safelist.txt`. Note the Tailwind v4 names: `shadow-sm` is v3's `shadow`, `rounded-sm` is v3's `rounded`. To use any other utility, build a plugin stylesheet that imports the package source and scans the plugin's templates, then enqueue it instead of the default one:
@@ -142,13 +148,17 @@ wp_register_style( UI::HANDLE, plugins_url( 'assets/admin.build.css', __FILE__ )
 UI::enqueue();
 ```
 
+## Upgrading from 1.x
+
+2.0 replaces the visual identity. Breaking changes: icons are Phosphor names (e.g. `cog` → `gear-six`, `chevron-down` → `caret-down`); components use the `ink` neutrals instead of `slate`, and `slate`/`gray`/`indigo` now carry the Tailwind v4 default values; sidebar groups are headings instead of accordions (group `icon`/`open` are ignored, put icons on the links); sidebar classes are `bui-nav__*` and the active class is `bui-is-active`; `mobile_title` is gone (the app bar shows the brand).
+
 ## Several plugins, one copy
 
 Each bundled copy registers itself in `bootstrap.php`; the highest version is chosen the first time a `Wocody\BoatUI` class is used, and only that copy's classes and assets load. Keep packages within the same major version across plugins. `Wocody_Boat_UI_Loader::versions()` lists every registered copy for diagnostics.
 
 ## Showcase
 
-Add `define( 'WOCODY_BOAT_UI_DEMO', true );` to `wp-config.php` on a development site and open **Tools → Boat UI** for every component, including a reproduction of the reference "Site features" and "Site basics" screens.
+Add `define( 'WOCODY_BOAT_UI_DEMO', true );` to `wp-config.php` on a development site and open **Tools → Boat UI** for every component, including sample "Site features" and "Site basics" settings screens.
 
 ## Development
 
@@ -156,7 +166,7 @@ Add `define( 'WOCODY_BOAT_UI_DEMO', true );` to `wp-config.php` on a development
 npm install
 npm run build        # dist/boat-ui.css (Tailwind CLI, minified) and dist/boat-ui.js
 npm run watch        # rebuild CSS on change
-npm run icons        # regenerate src/icons.php from Heroicons
+npm run icons        # regenerate src/icons.php from Phosphor Icons
 composer install
 composer test        # dependency-free PHP smoke tests
 composer standards   # WordPress Coding Standards + PHP 7.4 compatibility
@@ -166,4 +176,4 @@ composer standards   # WordPress Coding Standards + PHP 7.4 compatibility
 
 ## License
 
-GPL-2.0-or-later. Bundles Heroicons and compiled Tailwind CSS (both MIT); see `NOTICE`.
+GPL-2.0-or-later. Bundles Phosphor Icons and compiled Tailwind CSS (both MIT); see `NOTICE`.

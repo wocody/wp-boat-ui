@@ -11,8 +11,8 @@
     "icons": "node tools/build-icons.mjs"
   },
   "devDependencies": {
+    "@phosphor-icons/core": "2.1.1",
     "@tailwindcss/cli": "4.3.3",
-    "heroicons": "1.0.6",
     "tailwindcss": "4.3.3"
   }
 }

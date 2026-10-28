@@ -3,10 +3,7 @@ Copyright (C) 2026 Wocody. Licensed under the GNU General Public License v2 or l
 
 Third-party components bundled in this package:
 
-- Heroicons v1.0.6 (src/icons.php) — MIT License, Copyright (c) Tailwind Labs, Inc.
-  https://github.com/tailwindlabs/heroicons
+- Phosphor Icons 2.1.1, regular weight (src/icons.php, dist/boat-ui.js) — MIT License, Copyright (c) 2023 Phosphor Icons.
+  https://github.com/phosphor-icons/core
 - Tailwind CSS v4.3.3 (compiled into dist/boat-ui.css) — MIT License, Copyright (c) Tailwind Labs, Inc.
   https://github.com/tailwindlabs/tailwindcss
-
-The visual language follows the admin interface conventions of the Yoast SEO plugin (GPL-3.0-or-later);
-no Yoast code, logos or brand assets are included.

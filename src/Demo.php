@@ -67,7 +67,7 @@ final class Demo {
 				'title'    => 'Content tools',
 				'features' => array(
 					array(
-						'icon'        => 'sparkles',
+						'icon'        => 'sparkle',
 						'title'       => 'Smart suggestions',
 						'description' => '<p>Suggestions help you create better content by providing optimization hints that you can apply as you wish.</p>',
 						'link'        => array( 'Learn more', '#' ),
@@ -77,7 +77,7 @@ final class Demo {
 						),
 					),
 					array(
-						'icon'         => 'document-text',
+						'icon'         => 'file-text',
 						'icon_variant' => 'muted',
 						'title'        => 'llms.txt',
 						'description'  => '<p>Generate a file that points to your website\'s most relevant content. Designed to help AI assistants understand your website better.</p>',
@@ -107,7 +107,7 @@ final class Demo {
 						),
 					),
 					array(
-						'icon'        => 'map',
+						'icon'        => 'map-trifold',
 						'title'       => 'XML sitemaps',
 						'description' => '<p>Enable the XML sitemaps. A sitemap is a file that lists a website\'s essential pages to make sure search engines can find and crawl them.</p>',
 						'link'        => array( 'Learn more', '#' ),
@@ -117,7 +117,7 @@ final class Demo {
 								'variant'  => 'secondary',
 								'size'     => 'small',
 								'href'     => '#',
-								'icon_end' => 'external-link',
+								'icon_end' => 'arrow-square-out',
 							)
 						),
 						'toggle'      => array(
@@ -286,7 +286,7 @@ final class Demo {
 								'Buy now',
 								array(
 									'variant'  => 'upsell',
-									'icon_end' => 'arrow-narrow-right',
+									'icon_end' => 'arrow-right',
 								)
 							),
 						)
@@ -313,7 +313,7 @@ final class Demo {
 					UI::alert( '<p>Some settings need your attention.</p>', 'warning', array( 'title' => 'Warning' ) ),
 					UI::alert( '<p>Your settings were saved.</p>', 'success', array( 'dismissible' => true ) ),
 					UI::alert( '<p>The request failed. Check the connection and try again.</p>', 'error' ),
-					'<div class="bui:flex bui:flex-wrap bui:gap-2">' . UI::badge( 'Info' ) . UI::badge( 'Premium', 'upsell' ) . UI::badge( 'Plain', 'plain' ) . UI::badge( 'Success', 'success' ) . UI::badge( 'Error', 'error' ) . UI::badge( 'Local SEO', 'primary', array( 'size' => 'small' ) ) . '</div>',
+					'<div class="bui:flex bui:flex-wrap bui:gap-2">' . UI::badge( 'Info' ) . UI::badge( 'Premium', 'upsell' ) . UI::badge( 'Plain', 'plain' ) . UI::badge( 'Active', 'success', array( 'dot' => true ) ) . UI::badge( 'Warning', 'warning' ) . UI::badge( 'Error', 'error' ) . UI::badge( 'Local SEO', 'primary', array( 'size' => 'small' ) ) . '</div>',
 					UI::progress_field( 64, 100, array( 'label' => 'Export progress' ) ),
 					UI::button_group(
 						array(
@@ -391,37 +391,39 @@ final class Demo {
 		);
 
 		return array(
-			'id'           => 'wocody-boat-ui-demo',
-			'brand'        => array(
+			'id'         => 'wocody-boat-ui-demo',
+			'brand'      => array(
 				'name'    => 'boat',
 				'product' => 'UI',
 				'href'    => '#site-features',
 			),
-			'router'       => true,
-			'mobile_title' => 'Boat UI',
-			'navigation'   => array(
+			'router'     => true,
+			'actions'    => UI::badge( 'v' . UI::version(), 'plain', array( 'dot' => true ) ),
+			'navigation' => array(
 				array(
 					'label' => 'General',
-					'icon'  => 'desktop-computer',
 					'items' => array(
 						array(
 							'label'  => 'Site features',
+							'icon'   => 'squares-four',
 							'view'   => 'site-features',
 							'active' => true,
 						),
 						array(
 							'label' => 'Site basics',
+							'icon'  => 'sliders-horizontal',
 							'view'  => 'site-basics',
 						),
 						array(
 							'label' => 'Components',
+							'icon'  => 'puzzle-piece',
 							'view'  => 'components',
+							'badge' => array( 'New', 'primary' ),
 						),
 					),
 				),
 				array(
 					'label' => 'Content types',
-					'icon'  => 'newspaper',
 					'limit' => 3,
 					'items' => array(
 						array(
@@ -448,32 +450,33 @@ final class Demo {
 				),
 				array(
 					'label' => 'Advanced',
-					'icon'  => 'adjustments',
-					'open'  => false,
 					'items' => array(
 						array(
 							'label' => 'Crawl optimization',
+							'icon'  => 'bug-beetle',
 							'href'  => '#',
 						),
 						array(
 							'label' => 'Breadcrumbs',
+							'icon'  => 'path',
 							'href'  => '#',
 						),
 					),
 				),
 			),
-			'content'      => array(
+			'content'    => array(
 				UI::paper(
 					array(
 						'as'             => 'main',
 						'title'          => 'Site features',
+						'icon'           => 'squares-four',
 						'description'    => 'Tell us which features you want to use.',
 						'header_actions' => UI::button(
 							'Collapse all',
 							array(
 								'variant' => 'secondary',
 								'size'    => 'small',
-								'icon'    => 'chevron-up',
+								'icon'    => 'caret-up',
 							)
 						),
 						'attrs'          => array( 'data-bui-view' => 'site-features' ),
@@ -484,6 +487,7 @@ final class Demo {
 					array(
 						'as'           => 'main',
 						'title'        => 'Site basics',
+						'icon'         => 'sliders-horizontal',
 						'description'  => 'Configure the basics for your website.',
 						'content'      => $basics,
 						'dirty_footer' => true,
@@ -500,6 +504,7 @@ final class Demo {
 					array(
 						'as'          => 'main',
 						'title'       => 'Components',
+						'icon'        => 'puzzle-piece',
 						'description' => 'Every Boat UI component in one place.',
 						'content'     => $components,
 						'attrs'       => array(
@@ -523,12 +528,13 @@ final class Demo {
 					)
 				),
 			),
-			'aside'        => array(
+			'aside'      => array(
 				UI::aside_box(
 					array(
 						'title'   => 'Boat UI',
+						'icon'    => 'anchor-simple',
 						'variant' => 'highlight',
-						'content' => '<p class="bui:font-medium bui:text-slate-800">One admin interface for every Wocody plugin.</p><p>Shared layout, navigation and form controls.</p>'
+						'content' => '<p><strong>One admin interface for every Wocody plugin.</strong></p><p>Shared layout, navigation and form controls.</p>'
 							. UI::check_list( array( 'Tailwind CSS v4 utilities with the bui: prefix', 'Server-rendered PHP components', 'No build step in plugins' ) )
 							. UI::button(
 								'Documentation',
@@ -537,7 +543,7 @@ final class Demo {
 									'size'     => 'large',
 									'block'    => true,
 									'href'     => 'https://github.com/wocody/wp-boat-ui',
-									'icon_end' => 'arrow-narrow-right',
+									'icon_end' => 'arrow-right',
 								)
 							),
 					)
@@ -545,6 +551,7 @@ final class Demo {
 				UI::aside_box(
 					array(
 						'title'   => 'Support',
+						'icon'    => 'lifebuoy',
 						'size'    => 'small',
 						'content' => '<p>Questions or bugs? Open an issue on <a href="https://github.com/wocody/wp-boat-ui">GitHub</a>.</p>',
 					)

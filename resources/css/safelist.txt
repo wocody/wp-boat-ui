@@ -15,11 +15,11 @@ bui:max-w-xs bui:max-w-sm bui:max-w-md bui:max-w-lg bui:max-w-xl bui:max-w-2xl b
 bui:text-xxs bui:text-xs bui:text-tiny bui:text-sm bui:text-base bui:text-lg bui:text-xl bui:text-2xl bui:text-3xl
 bui:font-normal bui:font-medium bui:font-semibold bui:font-bold bui:italic bui:uppercase bui:tracking-wide bui:leading-5 bui:leading-6 bui:leading-7 bui:leading-tight bui:tabular-nums
 bui:text-start bui:text-center bui:text-end bui:truncate bui:break-words bui:break-all bui:whitespace-nowrap bui:underline bui:no-underline
-bui:text-white bui:text-slate-400 bui:text-slate-500 bui:text-slate-600 bui:text-slate-700 bui:text-slate-800 bui:text-slate-900
-bui:text-primary-500 bui:text-primary-600 bui:text-green-500 bui:text-green-600 bui:text-red-500 bui:text-red-600 bui:text-amber-500 bui:text-amber-600 bui:text-blue-500 bui:text-blue-600
-bui:bg-white bui:bg-slate-50 bui:bg-slate-100 bui:bg-slate-200 bui:bg-primary-50 bui:bg-primary-500 bui:bg-green-100 bui:bg-red-100 bui:bg-amber-100 bui:bg-blue-100 bui:bg-transparent
-bui:border bui:border-0 bui:border-t bui:border-b bui:border-slate-100 bui:border-slate-200 bui:border-slate-300 bui:border-primary-300 bui:border-dashed bui:divide-y bui:divide-slate-200
-bui:rounded bui:rounded-md bui:rounded-lg bui:rounded-xl bui:rounded-full bui:shadow-xs bui:shadow-sm bui:shadow-md bui:shadow-none
+bui:text-white bui:text-ink-400 bui:text-ink-500 bui:text-ink-600 bui:text-ink-700 bui:text-ink-800 bui:text-ink-900
+bui:text-ink-950 bui:text-primary-500 bui:text-primary-600 bui:text-primary-700 bui:text-green-500 bui:text-green-600 bui:text-red-500 bui:text-red-600 bui:text-amber-500 bui:text-amber-600 bui:text-blue-500 bui:text-blue-600
+bui:bg-white bui:bg-ink-50 bui:bg-ink-100 bui:bg-ink-200 bui:bg-ink-950 bui:bg-primary-50 bui:bg-primary-500 bui:bg-green-100 bui:bg-red-100 bui:bg-amber-100 bui:bg-blue-100 bui:bg-transparent
+bui:border bui:border-0 bui:border-t bui:border-b bui:border-ink-100 bui:border-ink-200 bui:border-ink-300 bui:border-primary-300 bui:border-dashed bui:divide-y bui:divide-ink-200
+bui:rounded bui:rounded-md bui:rounded-lg bui:rounded-xl bui:rounded-full bui:shadow-xs bui:shadow-sm bui:shadow-md bui:rounded-2xl bui:shadow-none
 bui:relative bui:absolute bui:sticky bui:top-0 bui:bottom-0 bui:z-10 bui:overflow-hidden bui:overflow-auto bui:overflow-x-auto
 bui:sr-only bui:not-sr-only bui:opacity-50 bui:pointer-events-none bui:cursor-pointer bui:list-disc bui:list-inside
 bui:min-[783px]:block bui:min-[783px]:hidden bui:min-[783px]:grid-cols-2 bui:sm:flex-row bui:md:flex-row bui:lg:flex-row bui:sm:max-w-sm

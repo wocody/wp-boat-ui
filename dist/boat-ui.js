@@ -21,14 +21,15 @@
 
 	const $ = (selector, scope = document) => scope.querySelector(selector);
 	const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+	// Phosphor Icons (regular, MIT).
 	const icons = {
-		success: '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>',
-		error: '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>',
-		warning: '<path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>',
-		info: '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>',
-		x: '<path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>',
+		success: '<path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/>',
+		error: '<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/>',
+		warning: '<path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"/>',
+		info: '<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"/>',
+		x: '<path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/>',
 	};
-	const svg = (name, className) => `<svg class="${className}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">${icons[name] || icons.info}</svg>`;
+	const svg = (name, className) => `<svg class="${className}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">${icons[name] || icons.info}</svg>`;
 
 	/* Modal ------------------------------------------------------------- */
 
@@ -135,7 +136,7 @@
 			all.forEach((view) => { view.hidden = view !== target; });
 			$$('[data-bui-nav]', this.root).forEach((link) => {
 				const active = link.getAttribute('data-bui-nav') === selected;
-				link.classList.toggle('bui-sidebar-navigation__item--active', active);
+				link.classList.toggle('bui-is-active', active);
 				if (active) link.setAttribute('aria-current', 'page');
 				else link.removeAttribute('aria-current');
 			});
@@ -163,10 +164,10 @@
 		const mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 		$$('[data-bui-search-shortcut]', root).forEach((kbd) => { kbd.textContent = mac ? '⌘K' : 'Ctrl K'; });
 		// The desktop sidebar is the first navigation; the mobile copy repeats it.
-		const index = $$('.bui-layout__sidebar .bui-sidebar-navigation__link', root).map((link) => {
-			const group = link.closest('.bui-sidebar-navigation__collapsible');
-			const summary = group ? $('summary', group) : null;
-			return { label: link.textContent.trim(), group: summary ? summary.textContent.trim() : '', link };
+		const index = $$('.bui-layout__sidebar .bui-nav__link', root).map((link) => {
+			const group = link.closest('.bui-nav__group');
+			const heading = group ? $('.bui-nav__label', group) : null;
+			return { label: $('.bui-nav__text', link).textContent.trim(), group: heading ? heading.textContent.trim() : '', link };
 		});
 		let active = 0;
 
@@ -350,7 +351,7 @@
 		document.documentElement.classList.add('bui-js');
 	}
 
-	window.BoatUI = { toast, modal, views, refresh, version: '1.0.1' };
+	window.BoatUI = { toast, modal, views, refresh, version: '2.0.0' };
 	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
 	else boot();
 })();

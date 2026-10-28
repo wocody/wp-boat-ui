@@ -2,6 +2,19 @@
 
 All notable changes follow [Semantic Versioning](https://semver.org).
 
+## 2.0.0 — 2026-10-28
+
+New, original Wocody visual identity.
+
+- Brand colour `#FC7900` with an accessible scale (`primary-contrast` dark text on filled orange, `primary-700` for orange text) and warm `ink` neutrals replacing slate.
+- System font stack at 14px base, new type scale, 10px control and 16px card radii, softer borders and shadows.
+- Phosphor Icons (regular weight, 1,512 icons) replace Heroicons.
+- Layout: sticky app bar with brand mark, pill quick search and `actions` slot; sidebar navigation with group headings, icons or dots and an orange active indicator; aside column in the grid and sticky; mobile drawer.
+- Components: header icon tile for `paper()`, `icon` and `footer` for `aside_box()` plus a dark `highlight` variant, `warning` and `dot` badges, toggles without inner icons, checkbox/radio/tile redesign, focus rings, dark toasts at the bottom right, larger modal with footer bar, drop zone with icon tile, table with uppercase headers.
+- Settings sections switch to two columns from the card width (container query).
+
+Breaking: see "Upgrading from 1.x" in the README.
+
 ## 1.0.1 — 2026-10-28
 
 - Fix: focused links (sidebar items and link buttons) lost their rounded corners. Base link styles now use `:where(a)` so component styles always win.

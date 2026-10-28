@@ -49,7 +49,7 @@ final class UI {
 	/**
 	 * Inline SVG icon.
 	 *
-	 * @param string               $name Heroicon name, optionally `solid:` prefixed.
+	 * @param string               $name Phosphor icon name (regular weight), e.g. `gear-six`.
 	 * @param array<string, mixed> $args See Icon::render().
 	 * @return string
 	 */
@@ -113,7 +113,7 @@ final class UI {
 			$inner          .= '<span class="bui-sr-only"> ' . Html::esc( Strings::get( 'newTab' ) ) . '</span>';
 		}
 		if ( $arrow ) {
-			$inner .= Icon::render( 'arrow-narrow-right' );
+			$inner .= Icon::render( 'arrow-right' );
 		}
 		return Html::tag( 'a', $attrs, $inner );
 	}
@@ -133,13 +133,13 @@ final class UI {
 	 * Badge.
 	 *
 	 * @param string               $label   Text.
-	 * @param string               $variant info|upsell|plain|success|error|primary.
-	 * @param array<string, mixed> $args    `size` (small|default|large), `class`, `id`, `attrs`.
+	 * @param string               $variant plain|primary|info|success|warning|error|upsell.
+	 * @param array<string, mixed> $args    `size` (small|default|large), `dot` (status dot), `class`, `id`, `attrs`.
 	 * @return string
 	 */
 	public static function badge( $label, $variant = 'info', array $args = array() ) {
 		$size = isset( $args['size'] ) ? $args['size'] : 'default';
-		return Html::tag( 'span', self::attrs( $args, array( 'bui-badge', 'bui-badge--' . $variant, 'default' !== $size ? 'bui-badge--' . $size : '' ) ), Html::esc( $label ) );
+		return Html::tag( 'span', self::attrs( $args, array( 'bui-badge', 'bui-badge--' . $variant, 'default' !== $size ? 'bui-badge--' . $size : '', ! empty( $args['dot'] ) ? 'bui-badge--dot' : '' ) ), Html::esc( $label ) );
 	}
 
 	// Actions.
@@ -214,18 +214,13 @@ final class UI {
 	 * @return string
 	 */
 	public static function spinner( array $args = array() ) {
-		$label = isset( $args['label'] ) ? $args['label'] : '';
-		return '<svg' . Html::attrs(
+		return Icon::render(
+			'circle-notch',
 			array(
-				'class'       => array( 'bui-spinner', isset( $args['class'] ) ? $args['class'] : '' ),
-				'xmlns'       => 'http://www.w3.org/2000/svg',
-				'fill'        => 'none',
-				'viewBox'     => '0 0 24 24',
-				'role'        => $label ? 'img' : null,
-				'aria-label'  => $label ? $label : null,
-				'aria-hidden' => $label ? null : 'true',
+				'class' => Html::classes( 'bui-spinner', isset( $args['class'] ) ? $args['class'] : '' ),
+				'label' => isset( $args['label'] ) ? $args['label'] : '',
 			)
-		) . '><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+		);
 	}
 
 	// Surfaces.
@@ -233,7 +228,8 @@ final class UI {
 	/**
 	 * White surface with optional header and sticky footer (the main settings card).
 	 *
-	 * @param array<string, mixed> $args `title`, `description` (trusted HTML), `header_actions` (trusted HTML), `content` (trusted HTML),
+	 * @param array<string, mixed> $args `title`, `icon` (Phosphor name shown in a tile beside the title), `description` (trusted HTML),
+	 *                                   `header_actions` (trusted HTML, aligned to the end of the header), `content` (trusted HTML),
 	 *                                   `footer` (trusted HTML), `dirty_footer` (show the footer only after a field changes),
 	 *                                   `as` (main|section|div|form), `title_tag`, `padded` (simple padded box), `content_class`, `class`, `id`, `attrs`.
 	 * @return string
@@ -260,8 +256,9 @@ final class UI {
 				)
 			);
 			$header .= ! empty( $args['description'] ) ? '<div class="bui-paper__description">' . Html::render( $args['description'] ) . '</div>' : '';
-			$header .= ! empty( $args['header_actions'] ) ? '<div class="bui-paper__header-actions">' . Html::render( $args['header_actions'] ) . '</div>' : '';
-			$inner  .= '<header class="bui-paper__header"><div class="bui-paper__header-inner">' . $header . '</div></header>';
+			$icon    = ! empty( $args['icon'] ) ? '<span class="bui-paper__icon">' . Icon::render( $args['icon'] ) . '</span>' : '';
+			$actions = ! empty( $args['header_actions'] ) ? '<div class="bui-paper__header-actions">' . Html::render( $args['header_actions'] ) . '</div>' : '';
+			$inner  .= '<header class="bui-paper__header">' . $icon . '<div class="bui-paper__header-inner">' . $header . '</div>' . $actions . '</header>';
 		}
 		if ( isset( $args['content'] ) ) {
 			$inner .= Html::tag( 'div', array( 'class' => array( 'bui-paper__content', isset( $args['content_class'] ) ? $args['content_class'] : '' ) ), '<div class="bui-paper__content-inner">' . Html::render( $args['content'] ) . '</div>' );
@@ -328,14 +325,16 @@ final class UI {
 	/**
 	 * Box for the right-hand column.
 	 *
-	 * @param array<string, mixed> $args `title`, `content` (trusted HTML), `variant` (default|highlight), `size` (default|small), `class`, `id`, `attrs`.
+	 * @param array<string, mixed> $args `title`, `icon`, `content` (trusted HTML), `footer` (trusted HTML), `variant` (default|highlight: dark surface),
+	 *                                   `size` (default|small), `class`, `id`, `attrs`.
 	 * @return string
 	 */
 	public static function aside_box( array $args = array() ) {
 		$variant = isset( $args['variant'] ) ? $args['variant'] : 'default';
 		$size    = isset( $args['size'] ) ? $args['size'] : 'default';
-		$inner   = ! empty( $args['title'] ) ? '<h2 class="bui-aside-box__title">' . Html::esc( $args['title'] ) . '</h2>' : '';
-		$inner  .= Html::render( isset( $args['content'] ) ? $args['content'] : '' );
+		$inner   = ! empty( $args['title'] ) ? '<h2 class="bui-aside-box__title">' . ( ! empty( $args['icon'] ) ? Icon::render( $args['icon'] ) : '' ) . Html::esc( $args['title'] ) . '</h2>' : '';
+		$footer  = ! empty( $args['footer'] ) ? '<div class="bui-aside-box__footer">' . Html::render( $args['footer'] ) . '</div>' : '';
+		$inner  .= Html::render( isset( $args['content'] ) ? $args['content'] : '' ) . $footer;
 		return Html::tag(
 			'div',
 			self::attrs( $args, array( 'bui-aside-box', 'default' !== $variant ? 'bui-aside-box--' . $variant : '', 'default' !== $size ? 'bui-aside-box--' . $size : '' ) ),
@@ -353,7 +352,7 @@ final class UI {
 	public static function check_list( array $items, array $args = array() ) {
 		$inner = '';
 		foreach ( $items as $item ) {
-			$inner .= '<li>' . Icon::render( 'solid:check-circle' ) . '<span>' . Html::esc( $item ) . '</span></li>';
+			$inner .= '<li>' . Icon::render( 'check-circle' ) . '<span>' . Html::esc( $item ) . '</span></li>';
 		}
 		return Html::tag( 'ul', self::attrs( $args, 'bui-check-list' ), $inner );
 	}
@@ -370,10 +369,10 @@ final class UI {
 	 */
 	public static function alert( $message, $variant = 'info', array $args = array() ) {
 		$icons = array(
-			'info'    => 'solid:information-circle',
-			'warning' => 'solid:exclamation',
-			'success' => 'solid:check-circle',
-			'error'   => 'solid:x-circle',
+			'info'    => 'info',
+			'warning' => 'warning',
+			'success' => 'check-circle',
+			'error'   => 'warning-circle',
 		);
 		$attrs = self::attrs( $args, array( 'bui-alert', 'bui-alert--' . $variant ) );
 		if ( ! isset( $attrs['role'] ) ) {
@@ -385,7 +384,7 @@ final class UI {
 		$body  .= Html::render( $message );
 		$inner .= '<div class="bui-alert__message">' . $body . '</div>';
 		if ( ! empty( $args['dismissible'] ) ) {
-			$inner .= '<button type="button" class="bui-alert__dismiss" data-bui-dismiss><span class="bui-sr-only">' . Html::esc( Strings::get( 'dismiss' ) ) . '</span>' . Icon::render( 'solid:x' ) . '</button>';
+			$inner .= '<button type="button" class="bui-alert__dismiss" data-bui-dismiss><span class="bui-sr-only">' . Html::esc( Strings::get( 'dismiss' ) ) . '</span>' . Icon::render( 'x' ) . '</button>';
 		}
 		return Html::tag( 'div', $attrs, $inner );
 	}
@@ -397,8 +396,8 @@ final class UI {
 	 * @return string
 	 */
 	public static function banner( array $args = array() ) {
-		$icon   = isset( $args['icon'] ) ? $args['icon'] : 'solid:information-circle';
-		$inner  = $icon ? Icon::render( $icon, array( 'class' => 'bui-banner__icon' ) ) : '';
+		$icon   = isset( $args['icon'] ) ? $args['icon'] : 'sparkle';
+		$inner  = $icon ? '<span class="bui-banner__icon">' . Icon::render( $icon ) . '</span>' : '';
 		$body   = ! empty( $args['title'] ) ? '<p class="bui-banner__title">' . Html::esc( $args['title'] ) . '</p>' : '';
 		$body  .= ! empty( $args['content'] ) ? '<div class="bui-banner__message">' . Html::render( $args['content'] ) . '</div>' : '';
 		$inner .= '<div>' . $body . '</div>';
@@ -457,7 +456,7 @@ final class UI {
 		$id      = Html::id( 'bui-tooltip' );
 		$trigger = isset( $args['trigger_html'] )
 			? Html::render( $args['trigger_html'] )
-			: '<button type="button" class="bui-tooltip-trigger" aria-describedby="' . Html::esc_attr( $id ) . '">' . Icon::render( 'solid:question-mark-circle' ) . '<span class="bui-sr-only">' . Html::esc( isset( $args['label'] ) ? $args['label'] : $text ) . '</span></button>';
+			: '<button type="button" class="bui-tooltip-trigger" aria-describedby="' . Html::esc_attr( $id ) . '">' . Icon::render( 'question' ) . '<span class="bui-sr-only">' . Html::esc( isset( $args['label'] ) ? $args['label'] : $text ) . '</span></button>';
 		return '<span class="bui-tooltip-container">' . $trigger . '<span role="tooltip" id="' . Html::esc_attr( $id ) . '" class="bui-tooltip">' . Html::esc( $text ) . '</span></span>';
 	}
 
@@ -640,8 +639,6 @@ final class UI {
 			null
 		);
 		$track = '<span class="bui-toggle__track" aria-hidden="true"><span class="bui-toggle__handle">'
-			. Icon::render( 'solid:check', array( 'class' => 'bui-toggle__icon bui-toggle__icon--check' ) )
-			. Icon::render( 'solid:x', array( 'class' => 'bui-toggle__icon bui-toggle__icon--x' ) )
 			. '</span></span>';
 		return Html::tag( 'span', self::attrs( $args, 'bui-toggle', array( 'id' ) ), $input . $track );
 	}
@@ -716,7 +713,7 @@ final class UI {
 			),
 			null
 		);
-		$content = Icon::render( isset( $args['icon'] ) ? $args['icon'] : 'document-add', array( 'class' => 'bui-file-input__icon' ) )
+		$content = '<span class="bui-file-input__icon">' . Icon::render( isset( $args['icon'] ) ? $args['icon'] : 'upload-simple' ) . '</span>'
 			. '<div class="bui-file-input__labels"><label class="bui-file-input__select-label" for="' . Html::esc_attr( $id ) . '">' . Html::esc( isset( $args['label'] ) ? $args['label'] : Strings::get( 'selectFile' ) ) . '</label>'
 			. '<span>' . Html::esc( isset( $args['drag_label'] ) ? $args['drag_label'] : Strings::get( 'dragDrop' ) ) . '</span></div>'
 			. ( $desc_id ? '<p class="bui-file-input__description" id="' . Html::esc_attr( $desc_id ) . '">' . Html::esc( $args['description'] ) . '</p>' : '' )
@@ -742,7 +739,7 @@ final class UI {
 		return Html::tag(
 			'details',
 			$attrs,
-			'<summary class="bui-disclosure__summary"><span>' . Html::esc( $summary ) . '</span>' . Icon::render( 'chevron-down' ) . '</summary><div class="bui-disclosure__content">' . Html::render( $content ) . '</div>'
+			'<summary class="bui-disclosure__summary"><span>' . Html::esc( $summary ) . '</span>' . Icon::render( 'caret-down' ) . '</summary><div class="bui-disclosure__content">' . Html::render( $content ) . '</div>'
 		);
 	}
 
@@ -763,7 +760,10 @@ final class UI {
 		foreach ( isset( $args['features'] ) ? (array) $args['features'] : array() as $feature ) {
 			$items .= self::feature( $feature );
 		}
-		$summary = '<summary class="bui-feature-group__toggle">' . self::title( isset( $args['title'] ) ? $args['title'] : '', 4, array( 'as' => 'h2' ) ) . Icon::render( 'solid:chevron-down' ) . '</summary>';
+		$count   = isset( $args['features'] ) ? count( (array) $args['features'] ) : 0;
+		$heading = self::title( isset( $args['title'] ) ? $args['title'] : '', 4, array( 'as' => 'h2' ) )
+			. ( ! isset( $args['count'] ) || $args['count'] ? '<span class="bui-feature-group__count">' . (int) $count . '</span>' : '' );
+		$summary = '<summary class="bui-feature-group__toggle"><span class="bui-feature-group__heading">' . $heading . '</span>' . Icon::render( 'caret-down' ) . '</summary>';
 		return Html::tag( 'details', $attrs, $summary . '<ul class="bui-feature-group__items">' . $items . '</ul>' );
 	}
 
@@ -785,7 +785,7 @@ final class UI {
 	 */
 	public static function feature( array $feature ) {
 		$id    = isset( $feature['id'] ) ? $feature['id'] : Html::id( 'bui-feature' );
-		$icon  = '<div class="bui-feature__icon' . ( isset( $feature['icon_variant'] ) && 'muted' === $feature['icon_variant'] ? ' bui-feature__icon--muted' : '' ) . '">' . Icon::render( isset( $feature['icon'] ) ? $feature['icon'] : 'puzzle' ) . '</div>';
+		$icon  = '<div class="bui-feature__icon' . ( isset( $feature['icon_variant'] ) && 'muted' === $feature['icon_variant'] ? ' bui-feature__icon--muted' : '' ) . '">' . Icon::render( isset( $feature['icon'] ) ? $feature['icon'] : 'puzzle-piece' ) . '</div>';
 		$title = self::title(
 			isset( $feature['title'] ) ? $feature['title'] : '',
 			3,
@@ -998,10 +998,10 @@ final class UI {
 		}
 		$variant = isset( $args['validation']['variant'] ) ? $args['validation']['variant'] : '';
 		$icons   = array(
-			'error'   => 'solid:exclamation-circle',
-			'warning' => 'solid:exclamation',
-			'success' => 'solid:check-circle',
-			'info'    => 'solid:information-circle',
+			'error'   => 'warning-circle',
+			'warning' => 'warning',
+			'success' => 'check-circle',
+			'info'    => 'info',
 		);
 		$control = '<div class="bui-validation-input' . ( $variant ? ' bui-validation-input--' . Html::esc_attr( $variant ) : '' ) . '">' . $input
 			. ( $variant && isset( $icons[ $variant ] ) ? Icon::render( $icons[ $variant ], array( 'class' => 'bui-validation-input__icon bui-validation-icon--' . $variant ) ) : '' ) . '</div>';
@@ -1065,7 +1065,7 @@ final class UI {
 		$label   = '<label class="bui-label bui-' . $type . '__label" for="' . Html::esc_attr( $id ) . '">' . $text
 			. ( $desc_id ? '<span class="bui-checkbox__description" id="' . Html::esc_attr( $desc_id ) . '">' . Html::esc( $args['description'] ) . '</span>' : '' ) . '</label>';
 		if ( 'radio' === $type && 'inline-block' === $variant ) {
-			$label = '<span class="bui-radio__content">' . $label . Icon::render( 'solid:check-circle', array( 'class' => 'bui-radio__check' ) ) . '</span>';
+			$label = '<span class="bui-radio__content">' . $label . '</span>';
 		}
 		return Html::tag(
 			'div',
