@@ -24,7 +24,7 @@ $check    = static function ( $label, $condition ) use ( &$failures, &$checks ) 
 
 // Version election: the newest registered copy wins.
 Wocody_Boat_UI_Loader::register( '0.9.0', '/nonexistent' );
-$check( 'newest version elected', '1.0.0' === UI::version() );
+$check( 'newest version elected', '1.0.1' === UI::version() );
 $check( 'root is this copy', realpath( dirname( __DIR__ ) ) === realpath( UI::root() ) );
 
 // Escaping.

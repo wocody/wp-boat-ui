@@ -101,7 +101,7 @@ if ( ! class_exists( 'Wocody_Boat_UI_Loader', false ) ) {
 	}
 }
 
-Wocody_Boat_UI_Loader::register( '1.0.0', __DIR__ );
+Wocody_Boat_UI_Loader::register( '1.0.1', __DIR__ );
 
 if ( defined( 'WOCODY_BOAT_UI_DEMO' ) && WOCODY_BOAT_UI_DEMO && function_exists( 'add_action' ) ) {
 	// Identical static callbacks are deduplicated by WordPress when several copies are bundled.

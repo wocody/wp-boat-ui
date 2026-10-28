@@ -186,15 +186,15 @@
 .bui-root progress { vertical-align: baseline; }
 .bui-root :where(button):focus { box-shadow: none; }
 
-.bui-root a {
+.bui-root :where(a) {
 	color: var(--bui-color-indigo-600);
 	text-decoration-line: underline;
 	box-shadow: none;
 }
-.bui-root a:visited { color: var(--bui-color-primary-500); }
-.bui-root a:hover { color: var(--bui-color-indigo-500); }
-.bui-root a:hover:visited { color: var(--bui-color-primary-400); }
-.bui-root a:focus {
+.bui-root :where(a):visited { color: var(--bui-color-primary-500); }
+.bui-root :where(a):hover { color: var(--bui-color-indigo-500); }
+.bui-root :where(a):hover:visited { color: var(--bui-color-primary-400); }
+.bui-root :where(a):focus {
 	border-radius: .125rem;
 	color: var(--bui-color-indigo-500);
 	outline: 2px solid var(--bui-color-indigo-600);

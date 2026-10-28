@@ -350,7 +350,7 @@
 		document.documentElement.classList.add('bui-js');
 	}
 
-	window.BoatUI = { toast, modal, views, refresh, version: '1.0.0' };
+	window.BoatUI = { toast, modal, views, refresh, version: '1.0.1' };
 	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
 	else boot();
 })();

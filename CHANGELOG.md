@@ -2,6 +2,10 @@
 
 All notable changes follow [Semantic Versioning](https://semver.org).
 
+## 1.0.1 — 2026-10-28
+
+- Fix: focused links (sidebar items and link buttons) lost their rounded corners. Base link styles now use `:where(a)` so component styles always win.
+
 ## 1.0.0 — 2026-10-27
 
 First release.
